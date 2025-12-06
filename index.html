@@ -3,199 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sounds of the Indian Wild</title>
+    <title>Neon Wild India</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --accent-color: #e67e22;
-            --bg-color: #f4f4f9;
-            --card-bg: #ffffff;
-            --quiz-color: #27ae60;
+            --neon-blue: #00f3ff;
+            --neon-pink: #bc13fe;
+            --neon-green: #0aff0a;
+            --bg-dark: #050505;
+            --card-bg: rgba(20, 20, 20, 0.8);
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(188, 19, 254, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 243, 255, 0.1) 0%, transparent 20%);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
             margin: 0;
             padding: 0;
-            color: var(--primary-color);
             text-align: center;
+            overflow-x: hidden;
         }
 
+        /* Header Styling */
         header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 2rem 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 3rem 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: fadeIn 1.5s ease-in-out;
         }
 
-        h1 { margin: 0; font-size: 2.5rem; }
-        p.subtitle { margin-top: 0.5rem; opacity: 0.9; }
-
-        /* Quiz Controls */
-        .quiz-section {
-            background: #ecf0f1;
-            padding: 1rem;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid #bdc3c7;
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
         }
 
-        .btn-quiz {
-            background-color: var(--quiz-color);
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            font-size: 1.2rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .btn-quiz:hover { background-color: #219150; }
-        
-        #quiz-status {
+        p.subtitle {
+            color: #ccc;
             margin-top: 10px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            height: 1.5rem; /* prevent jump */
+            font-size: 1rem;
         }
 
-        /* Grid Container */
+        /* Quiz Button */
+        .btn-quiz {
+            background: transparent;
+            color: var(--neon-green);
+            border: 2px solid var(--neon-green);
+            padding: 12px 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: 0.3s;
+            box-shadow: 0 0 10px var(--neon-green);
+            text-transform: uppercase;
+        }
+
+        .btn-quiz:hover {
+            background: var(--neon-green);
+            color: black;
+            box-shadow: 0 0 20px var(--neon-green), 0 0 40px var(--neon-green);
+        }
+
+        #quiz-status {
+            height: 30px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 0 0 5px white;
+        }
+
+        /* Container & Grid */
         .container {
             max-width: 1200px;
-            margin: 0 auto 2rem auto;
-            padding: 0 1rem;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
+            padding: 1rem;
         }
 
-        /* Animal Card */
+        /* Futuristic Card */
         .card {
             background: var(--card-bg);
-            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
             position: relative;
-            border: 4px solid transparent;
+            cursor: pointer;
         }
 
-        .card:hover { transform: translateY(-5px); }
-        
-        .card.correct { border-color: var(--quiz-color); }
-        .card.wrong { border-color: #c0392b; }
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+        }
 
         .card-image {
             width: 100%;
-            height: 200px;
+            height: 220px;
             object-fit: cover;
-            border-bottom: 4px solid var(--accent-color);
+            filter: brightness(0.8) contrast(1.1);
+            transition: 0.4s;
+            border-bottom: 2px solid var(--neon-blue);
         }
 
-        .card-content { padding: 1.5rem; }
+        .card:hover .card-image {
+            filter: brightness(1);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            position: relative;
+        }
 
         .animal-name {
+            font-family: 'Orbitron', sans-serif;
             font-size: 1.5rem;
-            margin: 0 0 0.5rem 0;
-            color: var(--primary-color);
+            margin: 0;
+            color: white;
         }
 
         .scientific-name {
+            color: var(--neon-pink);
             font-style: italic;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
             display: block;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
         }
 
-        .play-icon {
-            font-size: 1.2rem;
-            color: var(--accent-color);
-            font-weight: bold;
-            border: 2px solid var(--accent-color);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
+        /* Audio Visualizer Button */
+        .play-btn {
             display: inline-block;
+            padding: 8px 20px;
+            border: 1px solid white;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .card:hover .play-icon {
-            background-color: var(--accent-color);
+        /* Active State Animations */
+        .card.playing {
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 30px rgba(188, 19, 254, 0.6);
+        }
+
+        .card.playing .play-btn {
+            background: var(--neon-pink);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 15px var(--neon-pink);
+            animation: pulse 1s infinite;
+        }
+
+        .card.playing .card-image {
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer Credit */
+        .credit-section {
+            margin-top: 4rem;
+            padding: 3rem 1rem;
+            background: linear-gradient(to top, #000 0%, transparent 100%);
+        }
+
+        .made-by {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
             color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: glow 3s infinite alternate;
         }
 
-        .playing .play-icon {
-            background-color: var(--accent-color);
-            color: white;
+        .heart {
+            color: red;
+            display: inline-block;
+            animation: beat 1s infinite;
         }
 
-        footer {
-            margin-top: 3rem;
-            padding: 1rem;
-            font-size: 0.8rem;
-            color: #7f8c8d;
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px var(--neon-blue); }
+            100% { text-shadow: 0 0 20px var(--neon-pink), 0 0 30px var(--neon-blue); }
         }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .made-by { font-size: 1.1rem; }
+        }
+
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🇮🇳 Animals of India</h1>
-        <p class="subtitle">Click an animal to hear it, or take the quiz!</p>
+        <h1>🇮🇳 Cyber Wild India</h1>
+        <p class="subtitle">Experience the sounds of the future jungle</p>
     </header>
 
-    <div class="quiz-section">
-        <button class="btn-quiz" onclick="startQuiz()">❓ Start Quiz Mode</button>
-        <div id="quiz-status">Press Start to play a random sound!</div>
+    <div class="quiz-control">
+        <button class="btn-quiz" onclick="startQuiz()">⚡ Initiate Quiz Mode</button>
+        <div id="quiz-status">System Ready...</div>
     </div>
 
     <div class="container">
         
-        <div class="card" id="tiger" onclick="handleCardClick('tiger', 'audio-tiger', this)">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Tiger_in_Ranthambhore.jpg/640px-Tiger_in_Ranthambhore.jpg" alt="Bengal Tiger" class="card-image">
+        <div class="card" id="tiger" onclick="handleInteraction('tiger', 'audio-tiger', this)">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Tiger_in_Ranthambhore.jpg/640px-Tiger_in_Ranthambhore.jpg" alt="Tiger" class="card-image">
             <div class="card-content">
                 <h2 class="animal-name">Bengal Tiger</h2>
-                <span class="scientific-name">Panthera tigris tigris</span>
-                <div class="play-icon">🔊 Play Roar</div>
+                <span class="scientific-name">Panthera tigris</span>
+                <div class="play-btn">▶ Initialize Roar</div>
             </div>
-            <audio id="audio-tiger" src="https://upload.wikimedia.org/wikipedia/commons/c/c2/Tiger_roar_2.ogg"></audio>
+            <audio id="audio-tiger" preload="auto" src="https://upload.wikimedia.org/wikipedia/commons/c/c2/Tiger_roar_2.ogg"></audio>
         </div>
 
-        <div class="card" id="peacock" onclick="handleCardClick('peacock', 'audio-peacock', this)">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Peacock_Plumage.jpg/640px-Peacock_Plumage.jpg" alt="Indian Peafowl" class="card-image">
+        <div class="card" id="peacock" onclick="handleInteraction('peacock', 'audio-peacock', this)">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Peacock_Plumage.jpg/640px-Peacock_Plumage.jpg" alt="Peacock" class="card-image">
             <div class="card-content">
                 <h2 class="animal-name">Indian Peacock</h2>
                 <span class="scientific-name">Pavo cristatus</span>
-                <div class="play-icon">🔊 Play Call</div>
+                <div class="play-btn">▶ Initialize Call</div>
             </div>
-            <audio id="audio-peacock" src="https://upload.wikimedia.org/wikipedia/commons/0/07/Peacock_call.ogg"></audio>
+            <audio id="audio-peacock" preload="auto" src="https://upload.wikimedia.org/wikipedia/commons/0/07/Peacock_call.ogg"></audio>
         </div>
 
-        <div class="card" id="elephant" onclick="handleCardClick('elephant', 'audio-elephant', this)">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Elephas_maximus_%28Bandipur%29.jpg/640px-Elephas_maximus_%28Bandipur%29.jpg" alt="Indian Elephant" class="card-image">
+        <div class="card" id="elephant" onclick="handleInteraction('elephant', 'audio-elephant', this)">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Elephas_maximus_%28Bandipur%29.jpg/640px-Elephas_maximus_%28Bandipur%29.jpg" alt="Elephant" class="card-image">
             <div class="card-content">
                 <h2 class="animal-name">Indian Elephant</h2>
-                <span class="scientific-name">Elephas maximus indicus</span>
-                <div class="play-icon">🔊 Play Trumpet</div>
+                <span class="scientific-name">Elephas maximus</span>
+                <div class="play-btn">▶ Initialize Trumpet</div>
             </div>
-            <audio id="audio-elephant" src="https://upload.wikimedia.org/wikipedia/commons/2/23/Elephant_sounds.ogg"></audio>
+            <audio id="audio-elephant" preload="auto" src="https://upload.wikimedia.org/wikipedia/commons/2/23/Elephant_sounds.ogg"></audio>
         </div>
 
-        <div class="card" id="cobra" onclick="handleCardClick('cobra', 'audio-cobra', this)">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/King_Cobra.jpg/640px-King_Cobra.jpg" alt="King Cobra" class="card-image">
+        <div class="card" id="cobra" onclick="handleInteraction('cobra', 'audio-cobra', this)">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/King_Cobra.jpg/640px-King_Cobra.jpg" alt="Cobra" class="card-image">
             <div class="card-content">
                 <h2 class="animal-name">King Cobra</h2>
                 <span class="scientific-name">Ophiophagus hannah</span>
-                <div class="play-icon">🔊 Play Hiss</div>
+                <div class="play-btn">▶ Initialize Hiss</div>
             </div>
-            <audio id="audio-cobra" src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Snake_hissing.ogg"></audio>
+            <audio id="audio-cobra" preload="auto" src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Snake_hissing.ogg"></audio>
         </div>
 
     </div>
 
-    <footer>
-        <p>Images and Audio courtesy of Wikimedia Commons (Public Domain/CC)</p>
-    </footer>
+    <div class="credit-section">
+        <div class="made-by">
+            Made With <span class="heart">❤️</span> By Avinash!
+        </div>
+    </div>
 
     <script>
         let currentAudio = null;
@@ -209,7 +292,7 @@
             { id: 'cobra', audioId: 'audio-cobra' }
         ];
 
-        function handleCardClick(animalId, audioId, cardElement) {
+        function handleInteraction(animalId, audioId, cardElement) {
             if (quizMode) {
                 checkAnswer(animalId, cardElement);
             } else {
@@ -217,10 +300,11 @@
             }
         }
 
-        // --- Normal Playback Logic ---
         function playAudio(audioId, cardElement) {
             const audio = document.getElementById(audioId);
+            const btn = cardElement.querySelector('.play-btn');
 
+            // Stop if clicking same card
             if (currentAudio === audio && !audio.paused) {
                 audio.pause();
                 audio.currentTime = 0;
@@ -229,17 +313,35 @@
                 return;
             }
 
+            // Stop others
             if (currentAudio) {
                 currentAudio.pause();
                 currentAudio.currentTime = 0;
                 resetCards();
             }
 
+            // Start new
             currentAudio = audio;
+            resetCards(); // Ensure clean state
+            
             cardElement.classList.add('playing');
-            cardElement.querySelector('.play-icon').textContent = "⏸ Stop";
+            btn.innerText = "⏳ Loading..."; // Visual feedback for slow internet
 
-            audio.play().catch(e => console.log(e));
+            // Attempt play
+            const playPromise = audio.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // Playback started
+                    btn.innerText = "II SYSTEM ACTIVE";
+                })
+                .catch(error => {
+                    // Auto-play was prevented
+                    console.log("Playback Error: " + error);
+                    btn.innerText = "❌ Tap Again";
+                    alert("Please turn off Silent Mode and turn up Volume!");
+                });
+            }
 
             audio.onended = function() {
                 resetCards();
@@ -249,53 +351,33 @@
 
         function resetCards() {
             document.querySelectorAll('.card').forEach(c => {
-                c.classList.remove('playing', 'correct', 'wrong');
-                c.querySelector('.play-icon').textContent = "🔊 Play Sound";
+                c.classList.remove('playing');
+                c.style.borderColor = "rgba(255,255,255,0.1)";
+                const defaultText = c.querySelector('.animal-name').innerText.split(' ')[1]; 
+                c.querySelector('.play-btn').innerText = "▶ Initialize";
             });
         }
 
-        // --- Quiz Logic ---
+        // Quiz Logic
         function startQuiz() {
             resetCards();
             if(currentAudio) currentAudio.pause();
             
             quizMode = true;
             const status = document.getElementById('quiz-status');
-            status.textContent = "Listen closely... Which animal is this?";
-            status.style.color = "#2c3e50";
+            status.innerText = "🔊 LISTENING... IDENTIFY THE SUBJECT";
+            status.style.color = "#00f3ff";
 
-            // Pick random animal
             const randomAnimal = animals[Math.floor(Math.random() * animals.length)];
             correctAnimalId = randomAnimal.id;
 
-            // Play sound (hidden)
             const audio = document.getElementById(randomAnimal.audioId);
             audio.currentTime = 0;
-            audio.play();
+            audio.play().catch(e => alert("Tap screen first to enable audio!"));
         }
 
         function checkAnswer(clickedId, cardElement) {
             const status = document.getElementById('quiz-status');
 
-            if (clickedId === correctAnimalId) {
-                // Correct
-                cardElement.classList.add('correct');
-                status.textContent = "✅ Correct! Great job!";
-                status.style.color = "green";
-                quizMode = false; // End quiz
-                correctAnimalId = null;
-            } else {
-                // Wrong
-                cardElement.classList.add('wrong');
-                status.textContent = "❌ Wrong animal. Try again!";
-                status.style.color = "red";
-                
-                // Remove wrong class after animation
-                setTimeout(() => {
-                    cardElement.classList.remove('wrong');
-                }, 500);
-            }
-        }
-    </script>
-</body>
-</html>
+            if (clicked
+        
